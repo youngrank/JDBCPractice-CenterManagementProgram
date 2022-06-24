@@ -2,14 +2,19 @@ package common;
 
 import java.util.Scanner;
 
+import classes.ClassesDAO;
+import classes.ClassesManagement;
 import member.MemberDAO;
 import member.MemberManagement;
+import teacher.TeacherDAO;
+import teacher.TeacherManagement;
 
 public class Management {
 	// 필드
 	protected Scanner scanner = new Scanner(System.in);
 	protected MemberDAO memberDAO = MemberDAO.getInstance();
-	
+	protected ClassesDAO classDAO = ClassesDAO.getInstance();
+	protected TeacherDAO teacherDAO = TeacherDAO.getInstance();
 	// 생성자
 	
 	// 메소드
@@ -23,8 +28,10 @@ public class Management {
 				new MemberManagement();
 			} else if (num == 2) {
 				// 강좌관리
+				new ClassesManagement();
 			} else if (num == 3) {
 				// 강사관리
+				new TeacherManagement();
 			} else if (num == 9) {
 				// 로그아웃
 				break;
