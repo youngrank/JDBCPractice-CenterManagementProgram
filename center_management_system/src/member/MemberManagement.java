@@ -58,7 +58,7 @@ public class MemberManagement extends Management{
 	}
 	
 	private void selectAllMember() {
-		System.out.println("No. 회원명 성별 생년월일 주소 연락처");
+		System.out.println("No. 회원번호 회원명 성별 생년월일 주소 연락처");
 		
 		List<Member> list = memberDAO.selectAll();
 		int no = 0;
@@ -72,13 +72,27 @@ public class MemberManagement extends Management{
 		System.out.print("회원명> ");
 		String name = scanner.nextLine();
 		
-		searchMember(name);
+		selectOne(searchMember(name));
 	}
 	
-	private void searchMember(String name) {
+	private List<Member> searchMember(String name) {
+		System.out.println("No. 회원번호 회원명 성별 생년월일 주소 연락처");
+		
 		List<Member> list = memberDAO.search(name);
+		int no = 0;
 		for(Member member : list) {
+			System.out.print(++no + " ");
 			System.out.println(member);
 		}
+		
+		return list;
+	}
+	
+	private void selectOne(List<Member> list) {
+		int no = -1;
+		System.out.println("조회 하실 회원을 선택하세요. (No. 숫자 입력)> ");
+		no = Integer.parseInt(scanner.nextLine());
+		
+		System.out.println(list.get(no-1));
 	}
 }
