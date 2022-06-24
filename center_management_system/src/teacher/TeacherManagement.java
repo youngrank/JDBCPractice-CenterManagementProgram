@@ -6,7 +6,7 @@ import common.Management;
 
 public class TeacherManagement extends Management{
 
-	public TeacherManagement() {
+	public void run() {
 		while(true) {
 			printMenu();
 			
@@ -20,6 +20,7 @@ public class TeacherManagement extends Management{
 			} else if(num == 3) {
 				// 강사 검색
 				selectSearch();
+				
 			} else if(num == 9) {
 				// 뒤로가기
 				break;
@@ -88,11 +89,20 @@ public class TeacherManagement extends Management{
 	}
 	
 	private void selectOne(List<Teacher> list) {
+		if(list.isEmpty()) {
+			System.out.println("검색한 강사와 일치하는 강사가 없습니다.");
+			return;
+		}
+		
 		int no = -1;
+		int teacherId;
 		System.out.println("조회 하실 강사를 선택하세요. (No. 숫자 입력)> ");
 		no = Integer.parseInt(scanner.nextLine());
 		
 		System.out.println("강사번호 강사명 성별 생년월일 주소 연락처");
 		System.out.println(list.get(no-1));
+		teacherId = list.get(no-1).getTeacherId();
+		
+		new TeacherModification().run(teacherId);
 	}
 }

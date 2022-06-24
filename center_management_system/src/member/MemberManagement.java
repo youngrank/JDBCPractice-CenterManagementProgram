@@ -6,7 +6,7 @@ import common.Management;
 
 public class MemberManagement extends Management{
 	
-	public MemberManagement() {
+	public void run() {
 		while(true) {
 			printMenu();
 			
@@ -24,7 +24,7 @@ public class MemberManagement extends Management{
 				// 뒤로가기
 				break;
 			} else {
-				
+				System.out.println("inputerror");
 			}
 		}
 	}
@@ -89,10 +89,20 @@ public class MemberManagement extends Management{
 	}
 	
 	private void selectOne(List<Member> list) {
+		if(list.isEmpty()) {
+			System.out.println("검색한 회원과 일치하는 회원이 없습니다.");
+			return;
+		}
+		
 		int no = -1;
+		int memberId;
 		System.out.println("조회 하실 회원을 선택하세요. (No. 숫자 입력)> ");
 		no = Integer.parseInt(scanner.nextLine());
 		
+		System.out.println("회원번호 회원명 성별 생년월일 주소 연락처");
 		System.out.println(list.get(no-1));
+		memberId = list.get(no-1).getMemberId(); 
+		
+		new MemberModification().run(memberId);
 	}
 }

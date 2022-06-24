@@ -96,4 +96,61 @@ public class MemberDAO extends DAO{
 		
 		return list;
 	}
+	
+	public void updateAddress(int memberId, String address) {
+		try {
+			connect();
+			String sql = "UPDATE members SET address = '" + address + "' WHERE member_id = " + memberId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("정상적으로 수정되었습니다.");
+			} else {
+				System.out.println("수정 실패");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void updatePhoneNumber(int memberId, String phoneNumber) {
+		try {
+			connect();
+			String sql = "UPDATE members SET phone_number = '" + phoneNumber + "' WHERE member_id = " + memberId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("정상적으로 수정되었습니다.");
+			} else {
+				System.out.println("수정 실패");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void delete(int memberId) {
+		try {
+			connect();
+			String sql = "DELETE FROM members WHERE member_id = " + memberId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("회원 삭제가 완료되었습니다.");
+			} else {
+				System.out.println("회원 삭제에 실패하였습니다.");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
 }

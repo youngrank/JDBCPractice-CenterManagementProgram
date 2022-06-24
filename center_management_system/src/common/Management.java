@@ -25,13 +25,13 @@ public class Management {
 			
 			if(num == 1) {
 				// 회원관리
-				new MemberManagement();
+				new MemberManagement().run();
 			} else if (num == 2) {
 				// 강좌관리
-				new ClassesManagement();
+				new ClassesManagement().run();
 			} else if (num == 3) {
 				// 강사관리
-				new TeacherManagement();
+				new TeacherManagement().run();
 			} else if (num == 9) {
 				// 로그아웃
 				break;

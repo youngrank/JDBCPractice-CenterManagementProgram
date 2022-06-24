@@ -104,6 +104,25 @@ public class ClassesDAO extends DAO{
 		return list;
 	}
 	
+	public void update(int classId, String column, String str) {
+		try {
+			connect();
+			String sql = "UPDATE classes SET " + column + " = " + str + " WHERE class_id = " + classId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("정상적으로 수정되었습니다.");
+			} else {
+				System.out.println("수정 실패");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
 	
 	
 }

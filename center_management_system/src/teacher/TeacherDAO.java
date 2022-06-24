@@ -31,7 +31,7 @@ public class TeacherDAO extends DAO{
 			if(result > 0) {
 				System.out.println("신규 강사 등록이 완료되었습니다.");
 			} else {
-				System.out.println("신규 깅사 등록에 실패했습니다.");
+				System.out.println("신규 강사 등록에 실패했습니다.");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -77,6 +77,8 @@ public class TeacherDAO extends DAO{
 			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
+			
+			
 			while(rs.next()) {
 				Teacher teacher = new Teacher();
 				teacher.setTeacherId(rs.getInt("teacher_id"));
@@ -94,6 +96,63 @@ public class TeacherDAO extends DAO{
 			disconnect();
 		}
 		return list;
+	}
+	
+	public void updateAddress(int teacherId, String address) {
+		try {
+			connect();
+			String sql = "UPDATE teachers SET address = '" + address + "' WHERE teacher_id = " + teacherId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("정상적으로 수정되었습니다.");
+			} else {
+				System.out.println("수정 실패");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void updatePhoneNumber(int teacherId, String phoneNumber) {
+		try {
+			connect();
+			String sql = "UPDATE teachers SET phone_number = '" + phoneNumber + "' WHERE teacher_id = " + teacherId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("정상적으로 수정되었습니다.");
+			} else {
+				System.out.println("수정 실패");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void delete(int teacherId) {
+		try {
+			connect();
+			String sql = "DELETE FROM teachers WHERE teacher_id = " + teacherId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("강사 삭제가 완료되었습니다.");
+			} else {
+				System.out.println("강사 삭제에 실패하였습니다.");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 	}
 	
 	

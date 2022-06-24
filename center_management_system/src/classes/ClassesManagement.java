@@ -6,7 +6,7 @@ import common.Management;
 
 public class ClassesManagement extends Management {
 	
-	public ClassesManagement() {
+	public void run() {
 		while(true) {
 			printMenu();
 			
@@ -93,12 +93,21 @@ public class ClassesManagement extends Management {
 	}
 	
 	private void selectOne(List<Classes> list) {
+		if(list.isEmpty()) {
+			System.out.println("검색된 데이터가 없습니다.");
+			return;
+		}
+		
 		int no = -1;
+		int classId;
 		System.out.println("조회 하실 강좌 선택하세요. (No. 숫자 입력)> ");
 		no = Integer.parseInt(scanner.nextLine());
 		
 		System.out.println("No. 강좌번호 강좌명 강사번호 장소 요일 금액 정원 개설여부 내용");
 		System.out.println(list.get(no-1));
+		classId = list.get(no-1).getClassId();
+		
+		new ClassesModification().run(classId);
 	}
 	
 	
