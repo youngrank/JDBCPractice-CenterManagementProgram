@@ -39,11 +39,11 @@ public class TeacherModification extends Management {
 		num = Integer.parseInt(scanner.nextLine());
 		
 		if(num == 1) {
-			System.out.println("주소를 입력하세요> ");
+			System.out.print("주소를 입력하세요> ");
 			input = scanner.nextLine();
 			teacherDAO.updateAddress(teacherId, input);
 		} else if(num == 2) {
-			System.out.println("연락처를 입력하세요> ");
+			System.out.print("연락처를 입력하세요> ");
 			input = scanner.nextLine();
 			teacherDAO.updatePhoneNumber(teacherId, input);
 		} else if(num == 9){

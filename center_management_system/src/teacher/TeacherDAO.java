@@ -45,7 +45,8 @@ public class TeacherDAO extends DAO{
 		List<Teacher> list = new ArrayList<>();
 		try {
 			connect();
-			String sql = "SELECT * FROM teachers ORDER BY teacher_name";
+			String sql = "SELECT teacher_id, teacher_name, gender, TO_CHAR(birth_date, 'yy/mm/dd') AS birth_date "
+					+ "FROM teachers ORDER BY teacher_id DESC";
 			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -55,8 +56,6 @@ public class TeacherDAO extends DAO{
 				teacher.setTeacherName(rs.getString("teacher_name"));
 				teacher.setGender(rs.getString("gender"));
 				teacher.setBirthDate(rs.getString("birth_date"));
-				teacher.setAddress(rs.getString("address"));
-				teacher.setPhoneNumber(rs.getString("phone_number"));
 				
 				list.add(teacher);
 			}
@@ -73,7 +72,8 @@ public class TeacherDAO extends DAO{
 		List<Teacher> list = new ArrayList<>();
 		try {
 			connect();
-			String sql = "SELECT * FROM teachers WHERE teacher_name = '" + name + "' ORDER BY teacher_id DESC";
+			String sql = "SELECT teacher_id, teacher_name, gender, TO_CHAR(birth_date, 'yy/mm/dd') AS birth_date, address, phone_number "
+					+ "FROM teachers WHERE teacher_name = '" + name + "' ORDER BY teacher_id DESC";
 			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);

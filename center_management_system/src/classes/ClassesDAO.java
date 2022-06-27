@@ -19,8 +19,8 @@ public class ClassesDAO extends DAO{
 	public void insertClass(Classes classes) {
 		try {
 			connect();
-			String sql = "INSERT INTO classes(class_id, class_name, teacher_id, class_place, class_day, class_fee, class_capacity, class_content) "
-					+ "VALUES (class_id_seq.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO classes(class_id, class_name, teacher_id, class_place, class_day, class_fee, class_capacity) "
+					+ "VALUES (class_id_seq.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, classes.getClassName());
 			pstmt.setInt(2, classes.getTeacherId());
@@ -28,7 +28,6 @@ public class ClassesDAO extends DAO{
 			pstmt.setString(4, classes.getClassDay());
 			pstmt.setInt(5, classes.getClassFee());
 			pstmt.setInt(6, classes.getClassCapacity());
-			pstmt.setString(7, classes.getClassContent());
 			
 			int result = pstmt.executeUpdate();
 			if(result > 0) {
@@ -48,20 +47,48 @@ public class ClassesDAO extends DAO{
 		List<Classes> list = new ArrayList<>();
 		try {
 			connect();
-			String sql = "SELECT * FROM classes ORDER BY class_id DESC";
+			String sql = "SELECT class_id, class_name, teacher_name, class_place, class_day, class_fee, class_capacity "
+					+ "FROM classes JOIN teachers USING (teacher_id) ORDER BY class_id DESC";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				Classes classes = new Classes();
 				classes.setClassId(rs.getInt("class_id"));
 				classes.setClassName(rs.getString("class_name"));
-				classes.setTeacherId(rs.getInt("teacher_id"));
+				classes.setTeacherName(rs.getString("teacher_name"));
 				classes.setClassPlace(rs.getString("class_place"));
 				classes.setClassDay(rs.getString("class_day"));
 				classes.setClassFee(rs.getInt("class_fee"));
 				classes.setClassCapacity(rs.getInt("class_capacity"));
-				classes.setClassOpen(rs.getInt("class_open"));
-				classes.setClassContent(rs.getString("class_content"));
+				
+				list.add(classes);
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		
+		return list;
+	}
+	
+	// 강사의 강의 내역 조회
+	public List<Classes> selectAll(int teacherId) {
+		List<Classes> list = new ArrayList<>();
+		try {
+			connect();
+			// 강의번호 강좌명 장소 요일 정원
+			String sql = "SELECT class_id, class_name, class_place, class_day, class_capacity "
+					+ "FROM classes WHERE teacher_id = '" + teacherId + "' ORDER BY class_id DESC";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				Classes classes = new Classes();
+				classes.setClassId(rs.getInt("class_id"));
+				classes.setClassName(rs.getString("class_name"));
+				classes.setClassPlace(rs.getString("class_place"));
+				classes.setClassDay(rs.getString("class_day"));
+				classes.setClassCapacity(rs.getInt("class_capacity"));
 				
 				list.add(classes);
 			}
@@ -79,20 +106,20 @@ public class ClassesDAO extends DAO{
 		List<Classes> list = new ArrayList<>();
 		try {
 			connect();
-			String sql = "SELECT * FROM classes WHERE class_name LIKE '%"+ name +"%' ORDER BY class_id DESC";
+			String sql = "SELECT class_id, class_name, teacher_name, class_place, class_day, class_fee, class_capacity "
+					+ "FROM classes JOIN teachers USING (teacher_id) "
+					+ "WHERE class_name LIKE '%" + name + "%' ORDER BY class_id DESC";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				Classes classes = new Classes();
 				classes.setClassId(rs.getInt("class_id"));
 				classes.setClassName(rs.getString("class_name"));
-				classes.setTeacherId(rs.getInt("teacher_id"));
+				classes.setTeacherName(rs.getString("teacher_name"));
 				classes.setClassPlace(rs.getString("class_place"));
 				classes.setClassDay(rs.getString("class_day"));
 				classes.setClassFee(rs.getInt("class_fee"));
 				classes.setClassCapacity(rs.getInt("class_capacity"));
-				classes.setClassOpen(rs.getInt("class_open"));
-				classes.setClassContent(rs.getString("class_content"));
 				
 				list.add(classes);
 				}
@@ -115,6 +142,25 @@ public class ClassesDAO extends DAO{
 				System.out.println("정상적으로 수정되었습니다.");
 			} else {
 				System.out.println("수정 실패");
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void delete(int classId) {
+		try {
+			connect();
+			String sql = "DELETE FROM classes WHERE class_id = " + classId;
+			stmt = conn.createStatement();
+			int result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {
+				System.out.println("강좌 삭제가 완료되었습니다.");
+			} else {
+				System.out.println("강좌 삭제에 실패하였습니다.");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

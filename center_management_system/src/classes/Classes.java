@@ -13,12 +13,13 @@ public class Classes {
 	private String classDay;
 	private int classFee;
 	private int classCapacity;
-	private int classOpen;
-	private String classContent;
+	
+	private String teacherName;
+	private int registerId;
 	
 	@Override
 	public String toString() {
-		return classId + " " + className + " " + teacherId + " " + classPlace + " " + classDay + " " 
-				+ classFee + " " + classCapacity + " " + classOpen + " " + classContent;
+		return classId + "    " + String.format("%-5s", className) + teacherName + "  " + classPlace + "  " + classDay + " " 
+				+ classFee + "  " + classCapacity;
 	}
 }

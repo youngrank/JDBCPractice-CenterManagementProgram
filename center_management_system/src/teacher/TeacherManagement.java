@@ -2,6 +2,7 @@ package teacher;
 
 import java.util.List;
 
+import classes.Classes;
 import common.Management;
 
 public class TeacherManagement extends Management{
@@ -59,13 +60,14 @@ public class TeacherManagement extends Management{
 	}
 	
 	private void selectAllTeacher() {
-		System.out.println("No. 강사번호 강사명 성별 생년월일 주소 연락처");
+		System.out.println();
+		System.out.println("[No.] [강사번호] [강사명] [성별] [생년월일]");
 		
 		List<Teacher> list = teacherDAO.selectAll();
 		int no = 0;
 		for(Teacher teacher : list) {
-			System.out.print(++no + " ");
-			System.out.println(teacher);
+			System.out.print("  " + ++no + "    ");
+			System.out.println(teacher.getTeacherId() + "    " + teacher.getTeacherName() + "    " + teacher.getGender() + "   " + teacher.getBirthDate());
 		}
 	}
 	
@@ -77,13 +79,14 @@ public class TeacherManagement extends Management{
 	}
 	
 	private List<Teacher> searchTeacher(String name) {
-		System.out.println("No. 강사번호 강사명 성별 생년월일 주소 연락처");
+		System.out.println();
+		System.out.println("[No.] [강사번호] [강사명] [성별] [생년월일]");
 		
 		List<Teacher> list = teacherDAO.search(name);
 		int no = 0;
 		for(Teacher teacher : list) {
-			System.out.print(++no + " ");
-			System.out.println(teacher);
+			System.out.print("  " + ++no + "    ");
+			System.out.println(teacher.getTeacherId() + "    " + teacher.getTeacherName() + "    " + teacher.getGender() + "   " + teacher.getBirthDate());
 		}
 		return list;
 	}
@@ -96,13 +99,20 @@ public class TeacherManagement extends Management{
 		
 		int no = -1;
 		int teacherId;
-		System.out.println("조회 하실 강사를 선택하세요. (No. 숫자 입력)> ");
+		System.out.print("조회하실 강사를 선택하세요(No.)> ");
 		no = Integer.parseInt(scanner.nextLine());
 		
-		System.out.println("강사번호 강사명 성별 생년월일 주소 연락처");
+		System.out.println("[강사번호] [강사명] [성별] [생년월일] [    연락처    ]  [  주소  ] ");
 		System.out.println(list.get(no-1));
 		teacherId = list.get(no-1).getTeacherId();
-		
+		System.out.println("=[강의내역]================================================");
+		System.out.println("[No.] [강의번호] [강좌명] [장소] [요일] [정원]");
+		List<Classes> Classlist =  classDAO.selectAll(teacherId);
+		int num = 0;
+		for(Classes classes : Classlist) {
+			System.out.print("  " + ++num + "    ");
+			System.out.println(classes.getClassId() + " " + classes.getClassName() + " " + classes.getClassPlace() + " " + classes.getClassDay()+ " " + classes.getClassCapacity());
+		}
 		new TeacherModification().run(teacherId);
 	}
 }

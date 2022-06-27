@@ -6,6 +6,7 @@ import classes.ClassesDAO;
 import classes.ClassesManagement;
 import member.MemberDAO;
 import member.MemberManagement;
+import register.RegisterDAO;
 import teacher.TeacherDAO;
 import teacher.TeacherManagement;
 
@@ -15,6 +16,7 @@ public class Management {
 	protected MemberDAO memberDAO = MemberDAO.getInstance();
 	protected ClassesDAO classDAO = ClassesDAO.getInstance();
 	protected TeacherDAO teacherDAO = TeacherDAO.getInstance();
+	protected RegisterDAO registerDAO = RegisterDAO.getInstance();
 	// 생성자
 	
 	// 메소드
@@ -42,12 +44,13 @@ public class Management {
 	}
 	
 	protected void printMenu() {
-		System.out.println("1.회원관리 2.강좌관리 3.강사관리 9.로그아웃");
+		System.out.println("①회원관리 ②강좌관리 ③강사관리 ⑨로그아웃");
 	}
 	
 	protected int selectNum() {
 		int num = 0;
 		try {
+			System.out.print(" 선택>> ");
 			num = Integer.parseInt(scanner.nextLine());
 		} catch(NumberFormatException e) {
 			System.out.println("숫자를 입력해주세요.");

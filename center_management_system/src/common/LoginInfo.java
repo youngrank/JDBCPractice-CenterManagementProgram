@@ -32,7 +32,7 @@ public class LoginInfo {
 	
 	private void printMenu() {
 		System.out.println(" ①로그인\t②프로그램 종료 ");
-		System.out.print(" 입력> ");
+		System.out.print(" 입력>> ");
 	}
 	
 	private int selectNum() {
@@ -48,9 +48,10 @@ public class LoginInfo {
 	
 	private void login() {
 		while(true) {
-			System.out.print("   ID    : ");
+			System.out.println();
+			System.out.print("■    ID    : ");
 			String id = scanner.nextLine();
-			System.out.print("Password : ");
+			System.out.print("■ Password : ");
 			String password = scanner.nextLine();
 			
 			if( id.equals("admin") && password.equals("admin")) {
@@ -59,7 +60,9 @@ public class LoginInfo {
 				System.out.println("아이디 또는 비밀번호를 잘못 입력하셨습니다.");
 			}			
 		}
-		System.out.println("로그인 되었습니다.");
+		System.out.println();
+		System.out.println(" >> 로그인 되었습니다 <<");
+		System.out.println();
 		new Management().run();		
 	}
 	

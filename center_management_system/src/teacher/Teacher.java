@@ -15,6 +15,6 @@ public class Teacher {
 	
 	@Override
 	public String toString() {
-		return teacherId + " " + teacherName + " " + gender + " " + birthDate + " " + address + " " + phoneNumber;
+		return " " + teacherId + "    " + teacherName + "    " + gender + "   " + birthDate + "  " + phoneNumber + "  " + address;
 	}
 }
