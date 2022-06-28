@@ -26,24 +26,24 @@ public class TeacherModification extends Management {
 	@Override
 	protected void printMenu() {
 		System.out.println();
-		System.out.println("1.강사정보수정 2.강사정보삭제 9. 뒤로가기");
+		System.out.println("①강사정보수정 ②강사정보삭제 ⑨뒤로가기");
 	}
 	
 	private void selectUpdate(int teacherId) {
 		int num = 0;
 		String input = "";
 		
-		System.out.println("수정할 정보를 선택하세요.");
-		System.out.println("1.주소 2.연락처 9.뒤로가기");
-		System.out.print("선택> ");
+		System.out.println(" >> 수정할 정보를 선택하세요 <<");
+		System.out.println("①주소 ②연락처 ⑨뒤로가기");
+		System.out.print("■ 선택> ");
 		num = Integer.parseInt(scanner.nextLine());
 		
 		if(num == 1) {
-			System.out.print("주소를 입력하세요> ");
+			System.out.print("■ 주소> ");
 			input = scanner.nextLine();
 			teacherDAO.updateAddress(teacherId, input);
 		} else if(num == 2) {
-			System.out.print("연락처를 입력하세요> ");
+			System.out.print("■ 연락처> ");
 			input = scanner.nextLine();
 			teacherDAO.updatePhoneNumber(teacherId, input);
 		} else if(num == 9){
@@ -57,16 +57,16 @@ public class TeacherModification extends Management {
 	private void delete(int teacherId) {
 		String answer;
 		while(true) {
-			System.out.print("정말로 삭제하시겠습니까? [Y/N] : ");
+			System.out.print("■ 정말로 삭제하시겠습니까? [Y/N] : ");
 			answer = scanner.nextLine();
 			if(answer.equals("Y")) {
 				teacherDAO.delete(teacherId);	// 삭제 완료 후 이전 화면이 아닌 MemberManagement 화면으로 넘어가게 수정해야함
 				break;
 			} else if(answer.equals("N")) {
-				System.out.println("이전 화면으로 돌아갑니다.");
+				System.out.println(" >> 이전 화면으로 돌아갑니다 <<");
 				return;
 			} else {
-				System.out.println("잘못 된 입력입니다.");
+				System.out.println(" >> 잘못 된 입력입니다 <<");
 			}
 		}
 	}

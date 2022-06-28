@@ -72,10 +72,10 @@ public class MemberModification extends Management{
 				memberDAO.delete(memberId);
 				return true;
 			} else if(answer.equals("N")) {
-				System.out.println("이전 화면으로 돌아갑니다.");
+				System.out.println(">> 이전 화면으로 돌아갑니다 <<");
 				return false;
 			} else {
-				System.out.println("잘못 된 입력입니다.");
+				System.out.println(" >> 잘못 된 입력입니다 <<");
 			}
 		}
 	}

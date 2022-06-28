@@ -33,7 +33,7 @@ public class ClassesManagement extends Management {
 	protected void printMenu() {
 		System.out.println();
 		System.out.println("[강좌관리]");
-		System.out.println(" ①신규강좌등록 ②전체조회 ③강좌 검색 ⑨뒤로가기");
+		System.out.println(" ①신규강좌등록 ②전체조회 ③강좌검색 ⑨뒤로가기");
 	}
 	
 	private void newClass() {
@@ -63,7 +63,7 @@ public class ClassesManagement extends Management {
 	
 	private void selectAllClass() {
 		System.out.println();
-		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원]");
+		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원] [등록인원]");
 		
 		List<Classes> list = classDAO.selectAll();
 		int no = 0;
@@ -74,6 +74,7 @@ public class ClassesManagement extends Management {
 	}
 	
 	private void selectSearch() {
+		System.out.println();
 		System.out.print("■ 강좌명> ");
 		String name = scanner.nextLine();
 		
@@ -81,7 +82,7 @@ public class ClassesManagement extends Management {
 	}
 	
 	private List<Classes> searchClass(String name) {
-		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원]");		
+		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원] [등록인원]");		
 		List<Classes> list = classDAO.search(name);
 		int no = 0;
 		for(Classes classes : list) {
@@ -94,17 +95,20 @@ public class ClassesManagement extends Management {
 	
 	private void selectOne(List<Classes> list) {
 		if(list.isEmpty()) {
-			System.out.println("검색된 데이터가 없습니다.");
+			System.out.println(" >> 검색된 데이터가 없습니다 <<");
 			return;
 		}
 		
 		int no = -1;
 		int classId;
-		System.out.print("조회 하실 강좌 선택하세요. (No. 숫자 입력)> ");
+		System.out.println();
+		System.out.print("조회 하실 강좌를 선택하세요(No.)> ");
 		no = Integer.parseInt(scanner.nextLine());
 		
-		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원]");	
-		System.out.println(list.get(no-1));
+		// 선택한 강좌 출력
+		System.out.println();
+		System.out.println("[강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원] [등록인원]");	
+		System.out.println(" " + list.get(no-1));
 		classId = list.get(no-1).getClassId();
 		
 		new ClassesModification().run(classId);

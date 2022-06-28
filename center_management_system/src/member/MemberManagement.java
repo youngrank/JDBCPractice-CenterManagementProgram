@@ -110,9 +110,8 @@ public class MemberManagement extends Management{
 		System.out.println("[회원번호] [회원명] [성별] [생년월일] [    연락처    ]  [  주소  ] ");
 		System.out.println(list.get(no-1));
 		memberId = list.get(no-1).getMemberId();
+
 		System.out.println("---[수강내역]----------------------------------------------");
-		
-		
 		List<Classes> registerList = memberDAO.registerClass(memberId);
 		if(registerList.isEmpty()) {
 			System.out.println(" >> 등록된 수강 내역이 없습니다 <<");
@@ -121,7 +120,7 @@ public class MemberManagement extends Management{
 			int num = 0;
 			for(Classes classes : registerList) {
 				System.out.print("  " + ++num + "    ");
-				System.out.println(classes.getRegisterId() + " " + classes.getClassName() + " " + classes.getTeacherName() + " " + classes.getClassPlace() + " " + classes.getClassDay());
+				System.out.println(classes.getRegisterId() + "    " + String.format("%-5s", classes.getClassName()) + " " + classes.getTeacherName() + "   " + classes.getClassPlace() + " " + classes.getClassDay());
 			}
 		}
 		new MemberModification().run(memberId);

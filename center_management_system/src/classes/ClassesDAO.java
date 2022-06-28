@@ -31,9 +31,9 @@ public class ClassesDAO extends DAO{
 			
 			int result = pstmt.executeUpdate();
 			if(result > 0) {
-				System.out.println("신규 강좌 등록이 완료되었습니다.");
+				System.out.println(" >> 신규 강좌 등록이 완료되었습니다 <<");
 			} else {
-				System.out.println("신규 강좌 등록에 실패했습니다.");
+				System.out.println(" >> 신규 강좌 등록에 실패했습니다 <<");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -47,8 +47,10 @@ public class ClassesDAO extends DAO{
 		List<Classes> list = new ArrayList<>();
 		try {
 			connect();
-			String sql = "SELECT class_id, class_name, teacher_name, class_place, class_day, class_fee, class_capacity "
-					+ "FROM classes JOIN teachers USING (teacher_id) ORDER BY class_id DESC";
+			String sql = "SELECT c.class_id, c.class_name, teacher_name, c.class_place, c.class_day, c.class_fee, c.class_capacity, NVL(e.enrollment, 0) AS enrollment "
+					+ "FROM classes c JOIN teachers USING (teacher_id) LEFT OUTER JOIN (SELECT class_id, COUNT(*) AS enrollment "
+					+ "FROM register_class GROUP BY class_id) e ON c.class_id = e.class_id ORDER BY class_id DESC";
+//			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -60,7 +62,7 @@ public class ClassesDAO extends DAO{
 				classes.setClassDay(rs.getString("class_day"));
 				classes.setClassFee(rs.getInt("class_fee"));
 				classes.setClassCapacity(rs.getInt("class_capacity"));
-				
+				classes.setEnrollment(rs.getInt("enrollment"));
 				list.add(classes);
 			}
 		} catch(SQLException e) {
@@ -77,9 +79,13 @@ public class ClassesDAO extends DAO{
 		List<Classes> list = new ArrayList<>();
 		try {
 			connect();
-			// 강의번호 강좌명 장소 요일 정원
-			String sql = "SELECT class_id, class_name, class_place, class_day, class_capacity "
-					+ "FROM classes WHERE teacher_id = '" + teacherId + "' ORDER BY class_id DESC";
+			// 강의번호 강좌명 장소 요일 정원 등록인원
+			String sql = "SELECT c.class_id, c.class_name, c.class_place, c.class_day, c.class_capacity, NVL(e.enrollment, 0) AS enrollment "
+					+ "FROM classes c LEFT OUTER JOIN (SELECT class_id, COUNT(*) AS enrollment "
+					+ "FROM register_class GROUP BY class_id) e ON c.class_id = e.class_id "
+					+ "WHERE c.teacher_id = '" + teacherId + "' ORDER BY c.class_id DESC";
+//			String sql = "SELECT class_id, class_name, class_place, class_day, class_capacity "
+//					+ "FROM classes WHERE teacher_id = '" + teacherId + "' ORDER BY class_id DESC";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while(rs.next()) {
@@ -89,6 +95,7 @@ public class ClassesDAO extends DAO{
 				classes.setClassPlace(rs.getString("class_place"));
 				classes.setClassDay(rs.getString("class_day"));
 				classes.setClassCapacity(rs.getInt("class_capacity"));
+				classes.setEnrollment(rs.getInt("enrollment"));
 				
 				list.add(classes);
 			}
@@ -106,8 +113,9 @@ public class ClassesDAO extends DAO{
 		List<Classes> list = new ArrayList<>();
 		try {
 			connect();
-			String sql = "SELECT class_id, class_name, teacher_name, class_place, class_day, class_fee, class_capacity "
-					+ "FROM classes JOIN teachers USING (teacher_id) "
+			String sql = "SELECT c.class_id, c.class_name, teacher_name, c.class_place, c.class_day, c.class_fee, c.class_capacity, NVL(e.enrollment, 0) AS enrollment "
+					+ "FROM classes c JOIN teachers USING (teacher_id) LEFT OUTER JOIN (SELECT class_id, COUNT(*) AS enrollment "
+					+ "FROM register_class GROUP BY class_id) e ON c.class_id = e.class_id "
 					+ "WHERE class_name LIKE '%" + name + "%' ORDER BY class_id DESC";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -120,7 +128,7 @@ public class ClassesDAO extends DAO{
 				classes.setClassDay(rs.getString("class_day"));
 				classes.setClassFee(rs.getInt("class_fee"));
 				classes.setClassCapacity(rs.getInt("class_capacity"));
-				
+				classes.setEnrollment(rs.getInt("enrollment"));
 				list.add(classes);
 				}
 		} catch(SQLException e) {
@@ -139,9 +147,9 @@ public class ClassesDAO extends DAO{
 			int result = stmt.executeUpdate(sql);
 			
 			if(result > 0) {
-				System.out.println("정상적으로 수정되었습니다.");
+				System.out.println(" >> 정상적으로 수정되었습니다 <<");
 			} else {
-				System.out.println("수정 실패");
+				System.out.println(" >> 수정에 실패하였습니다 <<");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -158,9 +166,9 @@ public class ClassesDAO extends DAO{
 			int result = stmt.executeUpdate(sql);
 			
 			if(result > 0) {
-				System.out.println("강좌 삭제가 완료되었습니다.");
+				System.out.println(" >> 강좌 삭제가 완료되었습니다 <<");
 			} else {
-				System.out.println("강좌 삭제에 실패하였습니다.");
+				System.out.println(" >> 강좌 삭제에 실패하였습니다 <<");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -168,6 +176,7 @@ public class ClassesDAO extends DAO{
 			disconnect();
 		}
 	}
+	
 	
 	
 	

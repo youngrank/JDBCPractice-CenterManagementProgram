@@ -17,7 +17,8 @@ public class LoginInfo {
 				login();
 			} else if(num == 2) {
 				// 프로그램 종료
-				System.out.println("프로그램이 종료되었습니다.");
+				System.out.println();
+				System.out.println(" >> 프로그램이 종료되었습니다 <<");
 				break;
 			} else {
 				System.out.println("메뉴를 확인해주세요.");
@@ -58,7 +59,7 @@ public class LoginInfo {
 				break;
 			} else {
 				System.out.println("아이디 또는 비밀번호를 잘못 입력하셨습니다.");
-			}			
+			}
 		}
 		System.out.println();
 		System.out.println(" >> 로그인 되었습니다 <<");

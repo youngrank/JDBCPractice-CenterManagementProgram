@@ -33,22 +33,33 @@ public class RegisterManagement extends Management{
 	}
 	
 	private void registerClass(int memberId) {
-		int classId = selectSearch();
+		int classId = selectSearch(memberId);
 		
-		if(classId > 0)	registerDAO.insertRegister(classId, memberId);
+		if(classId > 29999)	registerDAO.insertRegister(classId, memberId);
+		else if(classId == -1) System.out.println(" >> 이미 신청한 강좌입니다 <<");
+		else if(classId == -2) System.out.println(" >> 수강인원이 모두 찼습니다 <<");
 	}
 	
-	private int selectSearch() {
+	private int selectSearch(int memberId) {
 		System.out.print("■ 신청 강좌명> ");
 		String name = scanner.nextLine();
 		int classId = selectOne(searchClass(name));
+	
+		int memberClassId = registerDAO.selectMemberClass(memberId, classId);
+		int capacityClassId = registerDAO.registerCapacity(classId);
+		
+		// classId 가 register_class의 member_id가 이미 가진 값이라면
+		// 이미 신청한 강의이므로 수강 신청 불가
+		if(classId == memberClassId) classId = -1;
+		// 수강정원이 넘어서면 수강신청 불가
+		if(classId == capacityClassId) classId = -2;
 		
 		return classId;
 	}
 	
 	private List<Classes> searchClass(String name) {
 		System.out.println();
-		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원]");		
+		System.out.println("[No.] [강좌번호] [강좌명] [강사] [장소] [요일] [금액] [정원] [등록인원]");		
 		List<Classes> list = classDAO.search(name);
 		int no = 0;
 		for(Classes classes : list) {
@@ -61,8 +72,8 @@ public class RegisterManagement extends Management{
 	
 	private int selectOne(List<Classes> list) {
 		if(list.isEmpty()) {
-			System.out.println("검색된 데이터가 없습니다.");
-			return -1;
+			System.out.println(" >> 검색된 데이터가 없습니다 <<");
+			return 0;
 		}
 		
 		int no = -1;
@@ -81,22 +92,21 @@ public class RegisterManagement extends Management{
 		registerDAO.delete(selectDelete(selectMemberClass(memberId)));
 	}
 	
-	public List<Register> selectMemberClass(int memberId) {
-		System.out.println("No. 신청번호 강좌명 강사번호 장소 요일 금액 정원 개설여부 내용");
+	public List<Classes> selectMemberClass(int memberId) {
+		System.out.println("[No.] [신청번호] [강좌명] [강사명] [장소] [요일]");
 		
-		List<Register> list = registerDAO.selectAll(memberId);
+		List<Classes> list = memberDAO.registerClass(memberId);
 		int no = 0;
-		for(Register register : list) {
-			System.out.print(++no + " ");
-			System.out.println(register);
+		for(Classes classes : list) {
+			System.out.print("  " + ++no + "    ");
+			System.out.println(classes.getRegisterId() + "    " + String.format("%-5s", classes.getClassName()) + " " + classes.getTeacherName() + "   " + classes.getClassPlace() + " " + classes.getClassDay());
 		}
 		
 		return list;
 	}
 	
-	public int selectDelete(List<Register> list) {
+	public int selectDelete(List<Classes> list) {
 		if(list.isEmpty()) {
-			System.out.println("신청한 강좌가 없습니다.");
 			return -1;
 		}
 		
