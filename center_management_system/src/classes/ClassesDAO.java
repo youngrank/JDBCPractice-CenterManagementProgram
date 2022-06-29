@@ -161,14 +161,16 @@ public class ClassesDAO extends DAO{
 	public void delete(int classId) {
 		try {
 			connect();
-			String sql = "DELETE FROM classes WHERE class_id = " + classId;
+			String sql = "DELETE FROM classes WHERE " + classId + " NOT IN (SELECT class_id FROM register_class)";
+//			String sql = "DELETE FROM classes WHERE class_id = " + classId;
 			stmt = conn.createStatement();
 			int result = stmt.executeUpdate(sql);
 			
 			if(result > 0) {
 				System.out.println(" >> 강좌 삭제가 완료되었습니다 <<");
 			} else {
-				System.out.println(" >> 강좌 삭제에 실패하였습니다 <<");
+//				System.out.println(" >> 강좌 삭제에 실패하였습니다 <<");
+				System.out.println(" >> 등록 인원이 있으므로 삭제할 수 없습니다 << ");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();

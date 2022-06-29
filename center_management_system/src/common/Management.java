@@ -36,6 +36,8 @@ public class Management {
 				new TeacherManagement().run();
 			} else if (num == 9) {
 				// 로그아웃
+				System.out.println();
+				System.out.println(" >> 로그아웃 되었습니다 <<");
 				break;
 			} else {
 				// 입력 오류
@@ -44,6 +46,8 @@ public class Management {
 	}
 	
 	protected void printMenu() {
+		System.out.println();
+		System.out.println("[Home]");
 		System.out.println("①회원관리 ②강좌관리 ③강사관리 ⑨로그아웃");
 	}
 	

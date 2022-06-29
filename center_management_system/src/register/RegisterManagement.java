@@ -73,7 +73,7 @@ public class RegisterManagement extends Management{
 	private int selectOne(List<Classes> list) {
 		if(list.isEmpty()) {
 			System.out.println(" >> 검색된 데이터가 없습니다 <<");
-			return 0;
+			return -3;
 		}
 		
 		int no = -1;

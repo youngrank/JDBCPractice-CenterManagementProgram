@@ -149,7 +149,8 @@ public class TeacherDAO extends DAO{
 				System.out.println("강사 삭제에 실패하였습니다.");
 			}
 		} catch(SQLException e) {
-			e.printStackTrace();
+			System.out.println(" >> 해당 강사의 강의 내역을 먼저 삭제해주세요 <<");
+//			e.printStackTrace();
 		} finally {
 			disconnect();
 		}

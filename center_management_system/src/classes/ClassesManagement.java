@@ -102,7 +102,7 @@ public class ClassesManagement extends Management {
 		int no = -1;
 		int classId;
 		System.out.println();
-		System.out.print("조회 하실 강좌를 선택하세요(No.)> ");
+		System.out.print("■ 조회 하실 강좌를 선택하세요(No.)> ");
 		no = Integer.parseInt(scanner.nextLine());
 		
 		// 선택한 강좌 출력
