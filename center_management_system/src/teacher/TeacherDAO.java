@@ -29,9 +29,9 @@ public class TeacherDAO extends DAO{
 			
 			int result = pstmt.executeUpdate();
 			if(result > 0) {
-				System.out.println("신규 강사 등록이 완료되었습니다.");
+				System.out.println(" >> 신규 강사 등록이 완료되었습니다 <<");
 			} else {
-				System.out.println("신규 강사 등록에 실패했습니다.");
+				System.out.println(" >> 신규 강사 등록에 실패했습니다 <<");
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class TeacherDAO extends DAO{
 			int result = stmt.executeUpdate(sql);
 			
 			if(result > 0) {
-				System.out.println("정상적으로 수정되었습니다.");
+				System.out.println(" >> 정상적으로 수정되었습니다 <<");
 			} else {
 				System.out.println("수정 실패");
 			}
@@ -125,7 +125,7 @@ public class TeacherDAO extends DAO{
 			int result = stmt.executeUpdate(sql);
 			
 			if(result > 0) {
-				System.out.println("정상적으로 수정되었습니다.");
+				System.out.println(" >> 정상적으로 수정되었습니다 <<");
 			} else {
 				System.out.println("수정 실패");
 			}

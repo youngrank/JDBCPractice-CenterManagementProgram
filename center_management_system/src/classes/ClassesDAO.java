@@ -148,8 +148,10 @@ public class ClassesDAO extends DAO{
 			
 			if(result > 0) {
 				System.out.println(" >> 정상적으로 수정되었습니다 <<");
+				System.out.println();
 			} else {
 				System.out.println(" >> 수정에 실패하였습니다 <<");
+				System.out.println();
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -161,8 +163,7 @@ public class ClassesDAO extends DAO{
 	public void delete(int classId) {
 		try {
 			connect();
-			String sql = "DELETE FROM classes WHERE " + classId + " NOT IN (SELECT class_id FROM register_class)";
-//			String sql = "DELETE FROM classes WHERE class_id = " + classId;
+			String sql = "DELETE FROM classes WHERE class_id = " + classId + " AND class_id NOT IN (SELECT class_id FROM register_class)";
 			stmt = conn.createStatement();
 			int result = stmt.executeUpdate(sql);
 			

@@ -47,7 +47,7 @@ public class TeacherManagement extends Management{
 		
 		System.out.print("■ 강사명> ");
 		teacher.setTeacherName(scanner.nextLine());;
-		System.out.print("■ 성별(F/M)");
+		System.out.print("■ 성별(F/M)> ");
 		teacher.setGender(scanner.nextLine());
 		System.out.print("■ 생년월일(2022-06-23)> ");
 		teacher.setBirthDate(scanner.nextLine());
